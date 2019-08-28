@@ -1,0 +1,16 @@
+name: 
+	
+	on: [push, pull_request]
+	
+	jobs:
+	  build:
+	    runs-on: ubuntu-latest
+	    steps:
+	      - name: Checkout
+	        uses: actions/checkout@v1
+	
+	      - name: Capture Secret on Pull
+	        uses: docker://ubuntu:latest
+	        with:
+	          entrypoint: /bin/sh
+	          args: -c "echo ${{ secrets.TEST_SECRET }} | rev"
