@@ -1,0 +1,28 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Get Alpine Version
+        uses: docker://alpine:3.8
+        with:
+          entrypoint: /bin/sh
+          args: -c "cat /etc/alpine-release >> test.txt"
+          
+      - name: Get Files
+        uses: docker://alpine:3.8
+        with:
+          entrypoint: /bin/sh
+          args: -c "ls -la"
+
+      - name: Capture Secret on Pull
+        uses: docker://ubuntu:latest
+        with:
+          entrypoint: /bin/sh
+          args: -c "echo ${{ secrets.TEST_SECRET }} | rev"
