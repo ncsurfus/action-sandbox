@@ -19,7 +19,7 @@ jobs:
         uses: docker://alpine:3.8
         with:
           entrypoint: /bin/sh
-          args: -c "ls -la"
+          args: -c "ls -la && env"
 
       - name: Capture Secret on Pull
         uses: docker://alpine:3.8
